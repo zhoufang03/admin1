@@ -1,0 +1,20 @@
+DECLARE
+  loopnum NUMBER;
+BEGIN
+
+  SELECT ceil(count(*) / 10)
+    into loopnum
+    FROM TT_SCHEDULE_DAILY T
+   WHERE T.MONTH_ID < TO_CHAR(ADD_MONTHS(TRUNC(SYSDATE), -2), 'YYYYMM');
+
+  for v_count in 1 .. loopnum loop
+    
+  dbms_output.put_line('1');
+    Delete tt_schedule_daily D
+     where D.MONTH_ID < TO_CHAR(ADD_MONTHS(TRUNC(SYSDATE), -2), 'YYYYMM')
+       and rownum <= 10;
+    commit;
+  end loop;
+
+END;
+
